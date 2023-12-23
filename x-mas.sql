@@ -230,8 +230,13 @@ SELECT
 
 -- 8. 보너스포인트가 없는 직원들 중에서 직급코드가 J4와 J7인 직원들의 사원명, 직급명, 급여를 조회하시오.
 -- 단, join과 IN 사용할 것(8명)
-
-
+SELECT
+		  e.EMP_NAME
+		, j.JOB_NAME
+		, e.SALARY
+  FROM employee e
+  JOIN job j ON (e.JOB_CODE = j.JOB_CODE)
+ WHERE e.BONUS IS NULL && e.JOB_CODE IN ('J4','J7');
 
 -- 9. 직급이 대리이면서 아시아 지역(ASIA1, ASIA2, ASIA3 모두 해당)에 근무하는 직원 조회
 -- 사번(EMPLOYEE.EMP_ID), 이름(EMPLOYEE.EMP_NAME), 직급명(JOB.JOB_NAME), 부서명(DEPARTMENT.DEPT_TITLE),
