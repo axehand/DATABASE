@@ -242,3 +242,18 @@ SELECT
 -- 사번(EMPLOYEE.EMP_ID), 이름(EMPLOYEE.EMP_NAME), 직급명(JOB.JOB_NAME), 부서명(DEPARTMENT.DEPT_TITLE),
 -- 근무지역명(LOCATION.LOCAL_NAME), 급여(EMPLOYEE.SALARY)를 조회하시오
 -- (해당 컬럼을 찾고, 해당 컬럼을 지닌 테이블들을 찾고, 테이블들을 어떤 순서로 조인해야 하는지 고민하고 SQL문을 작성할 것) 
+SELECT
+	     e.EMP_ID
+	   , e.EMP_NAME
+	   , j.JOB_NAME
+	   , d.DEPT_TITLE
+      , l.LOCAL_NAME
+      , e.SALARY
+  FROM employee e
+  JOIN JOB j ON (e.JOB_CODE = j.JOB_CODE)
+  JOIN DEPARTMENT d ON (e.DEPT_CODE = d.DEPT_ID)
+  JOIN LOCATION l ON (d.LOCATION_ID = l.LOCAL_CODE)
+ WHERE j.JOB_NAME IN ('대리') && l.LOCAL_NAME IN ('ASIA1','ASIA2','ASIA3');
+
+
+
