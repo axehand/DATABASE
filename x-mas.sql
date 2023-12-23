@@ -206,8 +206,8 @@ SELECT
 -- 6. 한국(KO)과 일본(JP)에 근무하는 직원들의 
 -- 사원명, 부서명, 지역명, 국가명을 조회하시오.(15명)
 SELECT
-	    e.EMP_NAME
-	  , d.DEPT_TITLE
+	     e.EMP_NAME
+	   , d.DEPT_TITLE
       , l.LOCAL_NAME
       , n.NATIONAL_NAME
   FROM employee e
@@ -219,10 +219,19 @@ SELECT
 
 -- 7. 같은 부서에 근무하는 직원들의 사원명, 부서코드, 동료이름을 조회하시오.
 -- self join 사용(60명)
+SELECT
+		  e.EMP_NAME
+		, e.DEPT_CODE
+		, e2.EMP_NAME
+  FROM employee e
+  JOIN employee e2 ON (e.DEPT_CODE = e2.DEPT_CODE)
+ WHERE e.EMP_NAME != e2.EMP_NAME;
 
 
 -- 8. 보너스포인트가 없는 직원들 중에서 직급코드가 J4와 J7인 직원들의 사원명, 직급명, 급여를 조회하시오.
 -- 단, join과 IN 사용할 것(8명)
+
+
 
 -- 9. 직급이 대리이면서 아시아 지역(ASIA1, ASIA2, ASIA3 모두 해당)에 근무하는 직원 조회
 -- 사번(EMPLOYEE.EMP_ID), 이름(EMPLOYEE.EMP_NAME), 직급명(JOB.JOB_NAME), 부서명(DEPARTMENT.DEPT_TITLE),
