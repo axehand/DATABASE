@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>menudb</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>name</key>
+			<string>swcamp@127.0.0.1</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>swcamp</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYoWE5TT2JqZWN0AAgAEQAaACQAKQAy
+			ADcASQBMAFEAUwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgA
+			nQC9AMIAzwDRANMA2ADjAOwA9wD6AQUBDgETASABIwAAAAAAAAIB
+			AAAAAAAAACkAAAAAAAAAAAAAAAAAAAEs
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 444}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>SELECT * FROM tbl_menu;
+
+
+-- autocommit 비활성화
+SET autocommit = 0;
+
+START TRANSACTION;
+
+
+INSERT 
+   INTO tbl_menu
+VALUES
+(	
+	NULL, '바나나해장국', 8500, 4, 'Y'
+);
+
+UPDATE tbl_menu
+	  SET menu_name = '수정된 메뉴1'
+	  WHERE menu_code = 5;
+	  
+UPDATE tbl_menu
+	  SET menu_name = '수정된 메뉴2'
+	  WHERE menu_code = 6;
+	  
+SELECT * FROM tbl_menu; -- 조회 된 데이터는 실제 DB에 적용된 값이 아니다.
+
+ROLLBACK;
+
+SELECT * FROM tbl_menu; -- rollback 또는 commit 이후 select한 것이 실제 DB에 적용된 값이다.
+
+
+-- ---------------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS tb1 (
+		pk INT PRIMARY KEY ,-- 컬럼 레벨에서 제약조건 추가
+		fk INT,
+		coll VARCHAR(255),
+		CHECK(coll IN ('Y','N'))		-- 테이블 레벨에서 제약조건 추가
+)  ENGINE=INNODB;
+
+DESCRIBE tb1;
+
+-- 줄여서 쓸 수도 있다.
+DESC tb1;
+
+INSERT INTO tb1 VALUES (1,10,'Y');
+
+SELECT * FROM tb1;
+
+
+
+
+CREATE TABLE IF NOT EXISTS tb2 (
+		pk INT PRIMARY KEY AUTO_INCREMENT,-- 컬럼 레벨에서 제약조건 추가
+		fk INT,
+		col1 VARCHAR(255),
+		CHECK(col1 IN ('Y','N'))		-- 테이블 레벨에서 제약조건 추가
+)  ENGINE=INNODB;
+
+INSERT INTO tb2 VALUES (NULL,2,'Y');
+
+SELECT * FROM tb2;
+
+ALTER TABLE tb2
+ADD col1 INT NOT NULL;
+
+DESC tb2;
+
+ALTER TABLE tb2 DROP COLUMN col;
+
+DESC tb2;
+
+ALTER TABLE tb2
+CHANGE COLUMN fk CHANGE_fk INT NOT NULL;
+
+DESC tb2;
+
+ALTER TABLE tb2 DROP PRIMARY KEY; -- auto_increment가 있어서 삭제가 안됨
+
+-- auto_increment 제거
+ALTER TABLE tb2 MODIFY pk INT;
+
+
+-- 다시 PRIMAEY KEY 제거
+ALTER TABLE tb2 DROP PRIMARY KEY;
+
+
+TRUNCATE tb2;
+
+DESC tb2;
+
+CREATE TABLE IF NOT EXISTS tb3 (
+		pk INT AUTO_INCREMENT PRIMARY KEY,
+		fk INT,
+		col1 VARCHAR(255),
+		CHECK(col1 IN ('Y','N'))
+)	ENGINE = INNODB;
+
+INSERT 
+   INTO tb3
+VALUES
+(NULL,10,'Y'),
+(NULL,20,'Y'),
+(NULL,30,'Y'),
+(NULL,40,'Y');
+
+SELECT * FROM tb3;
+
+TRUNCATE tb 3;
+
+DROP TABLE IF EXISTS user_notnull;
+CREATE TABLE IF NOT EXISTS user_notnull (
+    user_no INT NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
+    user_pwd VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    gender VARCHAR(3),
+    phone VARCHAR(255) NOT NULL,
+    email VARCHAR(255)
+) ENGINE=INNODB;
+
+INSERT 
+  INTO user_notnull
+(user_no, user_id, user_pwd, user_name, gender, phone, email)
+VALUES
+(1, 'user01', 'pass01', '홍길동', '남', '010-1234-5678', 'hong123@gmail.com'),
+(2, 'user02', 'pass02', '유관순', '여', '010-777-7777', 'yu77@gmail.com');
+
+SELECT * FROM user_notnull;
+
+-- not null 컬럼에 null이 들어갈때
+INSERT
+  INTO user_notnull
+(user_no, user_id, user_pwd, user_name, gender, phone, email)
+VALUES
+(3, 'user03', NULL, '이순신', '남', '010-222-2222', 'lee222@gmail.com');
+
+
+-- 중복값을 허용하지 않는 제약조건
+
+DROP TABLE IF EXISTS user_unique; 
+CREATE TABLE IF NOT EXISTS user_unique (
+    user_no INT NOT NULL UNIQUE,
+    user_id VARCHAR(255) NOT NULL,
+    user_pwd VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    gender VARCHAR(3),
+    phone VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    UNIQUE (phone)
+) ENGINE=INNODB;
+
+INSERT
+  INTO user_unique
+(user_no, user_id, user_pwd, user_name, gender, phone, email)
+VALUES
+(1, 'user01', 'pass01', '홍길동', '남', '010-1234-5678', 'hong123@gmail.com'),
+(2, 'user02', 'pass02', '유관순', '여', '010-777-7777', 'yu77@gmail.com');
+
+SELECT * FROM user_unique;
+
+-- 전화번호 중복
+INSERT 
+  INTO user_unique
+(user_no, user_id, user_pwd, user_name, gender, phone, email)
+VALUES
+(3, 'user03', 'pass03', '이순신', '남', '010-777-7777', 'lee222@gmail.com');
+
+-- primary key = unique조건과 not null 조건이 합쳐져있는 구조
+
+DROP TABLE IF EXISTS user_primarykey;
+CREATE TABLE IF NOT EXISTS user_primarykey (
+--     user_no INT PRIMARY KEY,
+    user_no INT,
+    user_id VARCHAR(255) NOT NULL,
+    user_pwd VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    gender VARCHAR(3),
+    phone VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    PRIMARY KEY (user_no)
+) ENGINE=INNODB;
+
+INSERT 
+  INTO user_primarykey
+(user_no, user_id, user_pwd, user_name, gender, phone, email)
+VALUES
+(1, 'user01', 'pass01', '홍길동', '남', '010-1234-5678', 'hong123@gmail.com'),
+(2, 'user02', 'pass02', '유관순', '여', '010-777-7777', 'yu77@gmail.com');
+
+SELECT * FROM user_primarykey;
+
+-- pk에 NULL이 들어갔을 때 오류발생
+INSERT 
+  INTO user_primarykey
+(user_no, user_id, user_pwd, user_name, gender, phone, email)
+VALUES
+(NULL, 'user03', 'pass03', '이순신', '남', '010-777-7777', 'lee222@gmail.com');
+
+
+
+-- 회원등급 부모 테이블 먼저 생성
+
+DROP TABLE IF EXISTS user_grade;
+CREATE TABLE IF NOT EXISTS user_grade (
+    grade_code INT NOT NULL UNIQUE,
+    grade_name VARCHAR(255) NOT NULL
+) ENGINE=INNODB;
+
+INSERT 
+  INTO user_grade
+VALUES 
+(10, '일반회원'),
+(20, '우수회원'),
+(30, '특별회원');
+
+SELECT * FROM user_grade;
+
+
+DROP TABLE IF EXISTS user_foreignkey1;
+CREATE TABLE IF NOT EXISTS user_foreignkey1 (
+    user_no INT PRIMARY KEY,
+    user_id VARCHAR(255) NOT NULL,
+    user_pwd VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    gender VARCHAR(3),
+    phone VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    grade_code INT ,
+    FOREIGN KEY (grade_code) 
+		REFERENCES user_grade (grade_code)
+) ENGINE=INNODB;
+
+INSERT 
+  INTO user_foreignkey1
+(user_no, user_id, user_pwd, user_name, gender, phone, email, grade_code)
+VALUES
+(1, 'user01', 'pass01', '홍길동', '남', '010-1234-5678', 'hong123@gmail.com', 10),
+(2, 'user02', 'pass02', '유관순', '여', '010-777-7777', 'yu77@gmail.com', 20);
+
+SELECT * FROM user_foreignkey1;
+
+-- 자식테이블에서 FOREIGN KEY 제약조건 컬럼 NULL값으로 INSERT
+
+INSERT 
+  INTO user_foreignkey1
+(user_no, user_id, user_pwd, user_name, gender, phone, email, grade_code)
+VALUES
+(3, 'user03', 'pass03', '이순신', '남', '010-777-7777', 'lee222@gmail.com',NULL);
+
+
+INSERT 
+  INTO user_foreignkey1
+(user_no, user_id, user_pwd, user_name, gender, phone, email, grade_code)
+VALUES
+(3, 'user03', 'pass03', '이순신', '남', '010-777-7777', 'lee222@gmail.com', 50);
+
+-- 삭제룰을 적용한 FOREIGN KEY 제약조건(외래키 제약)
+
+DROP TABLE IF EXISTS user_foreignkey2;
+CREATE TABLE IF NOT EXISTS user_foreignkey2 (
+    user_no INT PRIMARY KEY,
+    user_id VARCHAR(255) NOT NULL,
+    user_pwd VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    gender VARCHAR(3),
+    phone VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    grade_code INT ,
+    FOREIGN KEY (grade_code) 
+		REFERENCES user_grade (grade_code)
+) ENGINE=INNODB;
+
+
+INSERT 
+  INTO user_foreignkey2
+(user_no, user_id, user_pwd, user_name, gender, phone, email, grade_code)
+VALUES
+(1, 'user01', 'pass01', '홍길동', '남', '010-1234-5678', 'hong123@gmail.com', 10),
+(2, 'user02', 'pass02', '유관순', '여', '010-777-7777', 'yu77@gmail.com', 20);
+
+SELECT * FROM user_foreignkey2;
+
+-- 부모 테이블에서 우수 회원 등급 삭제
+DELETE FROM user_grade WHERE grade_code = 20; -- user_foreignkey1 테이블은 삭제룰을
+-- 적용하지 않고 20을 참조한 데이터가 있다.
+DELETE FROM user_foreignkey1 WHERE 1=1; -- user_foreignkey1 테이블의 참조하는 데이터 삭제
+
+
+SELECT*FROM user_foreignkey2;
+DELETE FROM user_grade WHERE grade_code = 20; </string>
+			<key>table</key>
+			<string>user_grade</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>151</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>INSERT 
+  INTO user_foreignkey2
+(user_no, user_id, user_pwd, user_name, gender, phone, email, grade_code)
+VALUES
+(1, 'user01', 'pass01', '홍길동', '남', '010-1234-5678', 'hong123@gmail.com', 10),
+(2, 'user02', 'pass02', '유관순', '여', '010-777-7777', 'yu77@gmail.com', 20)</string>
+		<string>SELECT * FROM user_foreignkey2</string>
+		<string>INSERT 
+  INTO user_foreignkey1
+(user_no, user_id, user_pwd, user_name, gender, phone, email, grade_code)
+VALUES
+(1, 'user01', 'pass01', '홍길동', '남', '010-1234-5678', 'hong123@gmail.com', 10),
+(2, 'user02', 'pass02', '유관순', '여', '010-777-7777', 'yu77@gmail.com', 20)</string>
+		<string>CREATE TABLE IF NOT EXISTS user_foreignkey2 (
+    user_no INT PRIMARY KEY,
+    user_id VARCHAR(255) NOT NULL,
+    user_pwd VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    gender VARCHAR(3),
+    phone VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    grade_code INT ,
+    FOREIGN KEY (grade_code) 
+		REFERENCES user_grade (grade_code)
+) ENGINE=INNODB</string>
+		<string>DELETE FROM user_grade WHERE grade_code = 20</string>
+		<string>-- user_foreignkey1 테이블의 참조하는 데이터 삭제
+
+
+SELECT*FROM user_foreignkey2</string>
+		<string>-- user_foreignkey1 테이블은 삭제룰을
+-- 적용하지 않고 20을 참조한 데이터가 있다.
+DELETE FROM user_foreignkey1 WHERE 1=1</string>
+		<string>-- 부모 테이블에서 우수 회원 등급 삭제
+DELETE FROM user_grade WHERE grade_code = 20</string>
+		<string>SELECT * FROM user_foreignkey1</string>
+		<string>-- 자식테이블에서 FOREIGN KEY 제약조건 컬럼 NULL값으로 INSERT
+
+INSERT 
+  INTO user_foreignkey1
+(user_no, user_id, user_pwd, user_name, gender, phone, email, grade_code)
+VALUES
+(3, 'user03', 'pass03', '이순신', '남', '010-777-7777', 'lee222@gmail.com',NULL)</string>
+		<string>CREATE TABLE IF NOT EXISTS user_foreignkey1 (
+    user_no INT PRIMARY KEY,
+    user_id VARCHAR(255) NOT NULL,
+    user_pwd VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    gender VARCHAR(3),
+    phone VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    grade_code INT ,
+    FOREIGN KEY (grade_code) 
+		REFERENCES user_grade (grade_code)
+) ENGINE=INNODB</string>
+		<string>SELECT * FROM user_grade</string>
+		<string>INSERT 
+  INTO user_grade
+VALUES 
+(10, '일반회원'),
+(20, '우수회원'),
+(30, '특별회원')</string>
+		<string>CREATE TABLE IF NOT EXISTS user_grade (
+    grade_code INT NOT NULL UNIQUE,
+    grade_name VARCHAR(255) NOT NULL
+) ENGINE=INNODB</string>
+		<string>SELECT * FROM user_primarykey</string>
+		<string>INSERT 
+  INTO user_primarykey
+(user_no, user_id, user_pwd, user_name, gender, phone, email)
+VALUES
+(1, 'user01', 'pass01', '홍길동', '남', '010-1234-5678', 'hong123@gmail.com'),
+(2, 'user02', 'pass02', '유관순', '여', '010-777-7777', 'yu77@gmail.com')</string>
+		<string>CREATE TABLE IF NOT EXISTS user_primarykey (
+--     user_no INT PRIMARY KEY,
+    user_no INT,
+    user_id VARCHAR(255) NOT NULL,
+    user_pwd VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    gender VARCHAR(3),
+    phone VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    PRIMARY KEY (user_no)
+) ENGINE=INNODB</string>
+		<string>INSERT 
+  INTO user_unique
+(user_no, user_id, user_pwd, user_name, gender, phone, email)
+VALUES
+(3, 'user03', 'pass03', '이순신', '남', '010-777-7777', 'lee222@gmail.com')</string>
+		<string>SELECT * FROM user_unique</string>
+		<string>INSERT
+  INTO user_unique
+(user_no, user_id, user_pwd, user_name, gender, phone, email)
+VALUES
+(1, 'user01', 'pass01', '홍길동', '남', '010-1234-5678', 'hong123@gmail.com'),
+(2, 'user02', 'pass02', '유관순', '여', '010-777-7777', 'yu77@gmail.com')</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>11.2.2-MariaDB</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

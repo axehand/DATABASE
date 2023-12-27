@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>name</key>
+			<string>swcamp@127.0.0.1</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>swcamp</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYoWE5TT2JqZWN0AAgAEQAaACQAKQAy
+			ADcASQBMAFEAUwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgA
+			nQC9AMIAzwDRANMA2ADjAOwA9wD6AQUBDgETASABIwAAAAAAAAIB
+			AAAAAAAAACkAAAAAAAAAAAAAAAAAAAEs
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 444}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>-- 명시적 형변환
+SELECT AVG(menu_price) FROM tbl_menu;
+SELECT CAST(AVG(menu_price) AS UNSIGNED INTEGER) AS '가격평균' FROM tbl_menu;
+SELECT CAST(AVG(menu_price) AS DOUBLE) AS '가격평균' FROM tbl_menu;
+
+-- 소수점에서 반올림해 정수형으로 변환
+SELECT CAST(AVG(menu_price) AS UNSIGNED INTEGER) AS '가격평균' FROM tbl_menu;
+-- 소수점 이하 한자리까지 나오는 실수형으로 변환 
+AVG(menu_price) AS FLOAT) AS '가격평균' FROM tbl_menu;
+-- 소수점 이하 12자리까지 나타내는 실수형으로 변환
+SELECT CAST(AVG(menu_price) AS DOUBLE) AS '가격평균' FROM tbl_menu;
+
+-- 문자 -&gt; 날짜
+-- 2023년 12월 27을 date형으로 변환
+SELECT CAST('2023$12$27' AS DATE);
+SELECT CAST('2023/12/27' AS DATE);
+SELECT CAST('2023-12-27' AS DATE);
+SELECT CAST('2023#12#27' AS DATE);
+
+-- 숫자 -&gt; 문자
+SELECT concat(cast(1000 AS CHAR),'원'); 
+
+-- 암시적 형변환
+-- 연산자 사용 시 자동 형변환이 되는데 주의해야한다.
+SELECT '1' + '2';    -- 각 문자가 정수로 변환됨
+SELECT 1+ '2';    -- 각 문자가 정수로 변환됨
+SELECT concat('1','2'); 
+SELECT CONCAT(menu_price, '원') FROM tbl_menu;    -- menu_price가 문자로 변환됨
+SELECT 3 &gt; 'MAY';    -- 문자는 0으로 변환된다.
+SELECT '안녕' + '하세요'; -- 모든 문자는 산술연산 또는 비교연산을 만나면 0이된다.
+SELECT 5 &gt; '반가워'; -- true의 의미인 1이 반환된다.
+
+
+
+-- 문자열 관련 함수
+-- ascii, char(숫자)
+SELECT ASCII('a'),CHAR(97);
+-- bit length(문자열), char_length(문자열), length(문자열)
+SELECT 
+			BIT_LENGTH('한글'),
+			CHAR_LENGTH( '한글' ),
+			LENGTH('한글')
+
+-- 숫자 관련 함수
+
+-- 날짜 및 시간 관련 함수</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>151</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>-- bit length(문자열), char_length(문자열), length(문자열)
+SELECT 
+			BIT_LENGTH('한글'),
+			CHAR_LENGTH( '한글' ),
+			LENGTH('한글')
+
+-- 숫자 관련 함수
+
+-- 날짜 및 시간 관련 함수</string>
+		<string>-- bit length(문자열), char_length(문자열), length(문자열)
+SELECT 
+			BIT_LENGTH( ' 한글 ' ),
+			CHAR_LENGTH( ' 한글 ' ),
+			LENGTH( ' 한글 ' )
+
+-- 숫자 관련 함수
+
+-- 날짜 및 시간 관련 함수</string>
+		<string>-- true의 의미인 1이 반환된다.
+
+
+
+-- 문자열 관련 함수
+-- ascii, char
+SELECT ASCII('a'),CHAR(97)</string>
+		<string>-- 모든 문자는 산술연산 또는 비교연산을 만나면 0이된다.
+SELECT 5&gt; '반가워'</string>
+		<string>-- 각 문자가 정수로 변환됨
+SELECT concat('1','2')</string>
+		<string>-- 각 문자가 정수로 변환됨
+SELECT 1+ '2'</string>
+		<string>-- 암시적 형변환
+SELECT '1' + '2'</string>
+		<string>-- 각 문자가 정수로 변환됨
+SELECT CONCAT(menu_price, '원') FROM tbl_menu</string>
+		<string>-- menu_price가 문자로 변환됨
+SELECT 3 &gt; 'MAY'</string>
+		<string>-- 숫자 -&gt; 문자
+SELECT concat(cast(1000 AS CHAR),'원')</string>
+		<string>SELECT CAST('2023/12/27' AS DATE)</string>
+		<string>-- 문자 -&gt; 날짜
+-- 2023년 12월 27을 date형으로 변환
+SELECT CAST('2023$12$27' AS DATE)</string>
+		<string>SELECT CAST('2023-12-27' AS DATE)</string>
+		<string>SELECT CAST('2023#12#27' AS DATE)</string>
+		<string>-- 소수점 이하 12자리까지 출력
+SELECT CAST(AVG(menu_price) AS DOUBLE) AS '가격평균' FROM tbl_menu</string>
+		<string>SELECT CAST(AVG(menu_price) AS DOUBLE) AS '가격평균' FROM tbl_menu</string>
+		<string>SELECT CAST(AVG(menu_price) AS UNSIGNED INTEGER) AS '가격평균' FROM tbl_menu</string>
+		<string>SELECT cast(AVG(menu_price)) AS DOUBLE) AS '가격평균' FROM tbl_menu</string>
+		<string>SELECT cast(AVG(menu_price)) AS UNSIGNED INTEGER) AS '가격평균' FROM tbl_menu</string>
+		<string>-- 명시적 형변환
+SELECT AVG(menu_price) FROM tbl_menu</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>11.2.2-MariaDB</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
